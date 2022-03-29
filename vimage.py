@@ -45,7 +45,7 @@ def save_frame(data, name, frame, with_ndd=False):
                                        numpy.unpackbits(f_pack)))
             similarity = (hash_size**2 - hd) / hash_size**2
             if similarity < 0.8:
-                #print('{} - {} - '.format(name, similarity))
+                print('{} - {} - '.format(name, similarity))
                 data['last'] = f_pack
                 cv2.imwrite(os.path.join(f_dir, name), frame)
         else:
