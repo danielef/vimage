@@ -1,0 +1,17 @@
+import cv2
+import numpy
+
+def binary_array_to_hex(arr):
+	"""
+	internal function to make a hex string out of a binary array.
+	"""
+	bit_string = ''.join(str(b) for b in 1 * arr.flatten())
+	width = int(numpy.ceil(len(bit_string)/4))
+	return '{:0>{width}x}'.format(int(bit_string, 2), width=width)
+
+def dhash(image, hash_size=8):
+    if hash_size < 2:
+        raise ValueError("Hash size must be greater than or equal to 2")
+    image = cv2.resize(image, (hash_size, hash_size + 1), interpolation = cv2.INTER_AREA)
+    diff = image[:, 1:] > image[:, :-1]
+    return diff
