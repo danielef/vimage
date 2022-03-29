@@ -27,14 +27,13 @@ def retrieve_captures(data, delta_skip=15):
 
     return data
 
-def save_frame(data, name, frame, ndd_threshold=0.8):
+def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hashsize=8):
     f_dir = data.get('dir', data['path'] + '_vimage')
     if not os.path.exists(f_dir):
         os.makedirs(f_dir)
         data['dir'] = f_dir
-    if ndd_threshold:
-        hash_size = 8
-        f_hash = ndd.dhash(frame, hash_size=hash_size)
+    if ndd_threshold > 0:
+        f_hash = ndd.dhash(frame, hash_size=ndd_hash_size)
         f_pack = numpy.packbits(f_hash.flatten())
         #print('hash: {}'.format(ndd.binary_array_to_hex(f_hash)))
         #print('pack: {}'.format(f_pack))
