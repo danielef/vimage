@@ -27,7 +27,7 @@ def retrieve_captures(data, delta_skip=15):
 
     return data
 
-def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hashsize=8):
+def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
     f_dir = data.get('dir', data['path'] + '_vimage')
     if not os.path.exists(f_dir):
         os.makedirs(f_dir)
@@ -41,7 +41,7 @@ def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hashsize=8):
         if last is not None:
             hd = sum(numpy.bitwise_xor(numpy.unpackbits(last), 
                                        numpy.unpackbits(f_pack)))
-            similarity = (hash_size**2 - hd) / hash_size**2
+            similarity = (ndd_hash_size**2 - hd) / ndd_hash_size**2
             if similarity < ndd_threshold:
                 print('{} - {} - '.format(name, similarity))
                 data['last'] = f_pack
