@@ -19,8 +19,7 @@ def retrieve_captures(data, delta_skip=15):
         f_readed += 1
         if f_readed % f_skip == 0:
             # print('Saving frame {}'.format(f_readed))
-            save_frame(data, '{}.jpg'.format(f_readed), frame, with_ndd=True)
-            f_saved += 1
+            f_saved += save_frame(data, '{}.jpg'.format(f_readed), frame)
         is_success, frame = data['capture'].read()
 
     data['saved'] = f_saved
@@ -28,12 +27,12 @@ def retrieve_captures(data, delta_skip=15):
 
     return data
 
-def save_frame(data, name, frame, with_ndd=False):
+def save_frame(data, name, frame, ndd_threshold=0.8):
     f_dir = data.get('dir', data['path'] + '_vimage')
     if not os.path.exists(f_dir):
         os.makedirs(f_dir)
         data['dir'] = f_dir
-    if with_ndd:
+    if ndd_threshold:
         hash_size = 8
         f_hash = ndd.dhash(frame, hash_size=hash_size)
         f_pack = numpy.packbits(f_hash.flatten())
@@ -44,14 +43,18 @@ def save_frame(data, name, frame, with_ndd=False):
             hd = sum(numpy.bitwise_xor(numpy.unpackbits(last), 
                                        numpy.unpackbits(f_pack)))
             similarity = (hash_size**2 - hd) / hash_size**2
-            if similarity < 0.8:
+            if similarity < ndd_threshold:
                 print('{} - {} - '.format(name, similarity))
                 data['last'] = f_pack
                 cv2.imwrite(os.path.join(f_dir, name), frame)
+                return 1
         else:
             data['last'] = f_pack
             cv2.imwrite(os.path.join(f_dir, name), frame)
-    
+            return 1
+
+        return 0
     else:
         cv2.imwrite(os.path.join(f_dir, name), frame)
+        return 1
 
