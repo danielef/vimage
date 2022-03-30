@@ -40,8 +40,8 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--resize', required=False, type=resizeCheck, help='WIDTHxHEIGHT pixels to resize capture')
 
     args = parser.parse_args()
-    print(args)
+    logging.info('params: {}'.format(args.__dict__))
 
     data = vimage.retrieve_media_data(args.video)
-    print(vimage.retrieve_captures(data))
+    logging.debug(vimage.retrieve_captures(data))
     
