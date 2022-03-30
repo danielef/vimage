@@ -1,6 +1,5 @@
 import cv2
 import os
-import numpy
 import ndd
 
 def retrieve_media_data(path):
@@ -34,26 +33,19 @@ def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
         data['dir'] = f_dir
     if ndd_threshold > 0:
         f_hash = ndd.dhash(frame, hash_size=ndd_hash_size)
-        f_pack = numpy.packbits(f_hash.flatten())
-        #print('hash: {}'.format(ndd.binary_array_to_hex(f_hash)))
-        #print('pack: {}'.format(f_pack))
         last = data.get('last')
         if last is not None:
-            hd = sum(numpy.bitwise_xor(numpy.unpackbits(last), 
-                                       numpy.unpackbits(f_pack)))
-            similarity = (ndd_hash_size**2 - hd) / ndd_hash_size**2
+            similarity = ndd.similarity(last, f_hash, ndd_hash_size)
             if similarity < ndd_threshold:
                 print('{} - {} - '.format(name, similarity))
-                data['last'] = f_pack
+                data['last'] = f_hash
                 cv2.imwrite(os.path.join(f_dir, name), frame)
                 return 1
         else:
-            data['last'] = f_pack
+            data['last'] = f_hash
             cv2.imwrite(os.path.join(f_dir, name), frame)
             return 1
-
         return 0
     else:
         cv2.imwrite(os.path.join(f_dir, name), frame)
         return 1
-
