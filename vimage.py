@@ -35,7 +35,7 @@ def write_frame(data, f_dir, f_name, similarity=0.0):
         cv2.imwrite(file_name, frame)
         return 1
     except Exception as e:
-        log.error(e)
+        logging.error(e)
         return 0
 
 def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
