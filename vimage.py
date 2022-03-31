@@ -45,9 +45,13 @@ def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
                 return 1
         else:
             data['last'] = f_hash
-            cv2.imwrite(os.path.join(f_dir, name), frame)
+            file_name = os.path.join(f_dir, name)
+            logging.info('Writing: {} - {}'.format(file_name, similarity))
+            cv2.imwrite(file_name, frame)
             return 1
         return 0
     else:
-        cv2.imwrite(os.path.join(f_dir, name), frame)
+        file_name = os.path.join(f_dir, name)
+        logging.info('Writing: {}'.format(file_name))
+        cv2.imwrite(file_name, frame)
         return 1
