@@ -27,6 +27,17 @@ def retrieve_captures(data, delta_skip=15):
 
     return data
 
+def write_frame(data, f_dir, f_name, similarity=0.0):
+    try:
+        data['last'] = f_hash
+        file_name = os.path.join(f_dir, f_name)
+        logging.info('Writing: {} - {}'.format(file_name, similarity))
+        cv2.imwrite(file_name, frame)
+        return 1
+    except Exception as e:
+        log.error(e)
+        return 0
+
 def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
     f_dir = data.get('dir', data['path'] + '_vimage')
     if not os.path.exists(f_dir):
@@ -38,17 +49,18 @@ def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
         if last is not None:
             similarity = ndd.similarity(last, f_hash, ndd_hash_size)
             if similarity < ndd_threshold:
-                data['last'] = f_hash
-                file_name = os.path.join(f_dir, name)
-                logging.info('Writing: {} - {}'.format(file_name, similarity))
-                cv2.imwrite(file_name, frame)
-                return 1
+                return write_frame(data, f_dir, name, similarity)
+                #data['last'] = f_hash
+                #file_name = os.path.join(f_dir, name)
+                #logging.info('Writing: {} - {}'.format(file_name, similarity))
+                #cv2.imwrite(file_name, frame)
+                # return 1
         else:
-            data['last'] = f_hash
-            file_name = os.path.join(f_dir, name)
-            logging.info('Writing: {} - {}'.format(file_name, similarity))
-            cv2.imwrite(file_name, frame)
-            return 1
+            #data['last'] = f_hash
+            #file_name = os.path.join(f_dir, name)
+            #logging.info('Writing: {} - {}'.format(file_name, 1.0))
+            #cv2.imwrite(file_name, frame)
+            return write_frame(data, f_dir, name)
         return 0
     else:
         file_name = os.path.join(f_dir, name)
