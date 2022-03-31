@@ -43,5 +43,5 @@ if __name__ == '__main__':
     logging.info('params: {}'.format(args.__dict__))
 
     data = vimage.retrieve_media_data(args.video)
-    logging.debug(vimage.retrieve_captures(data))
+    logging.debug('{}'.format(vimage.retrieve_captures(data)))
     
