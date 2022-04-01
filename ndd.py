@@ -1,4 +1,5 @@
 import cv2
+import logging
 import numpy
 
 def binary_array_to_hex(arr):
@@ -14,7 +15,7 @@ def dhash(image, hash_size=8):
         raise ValueError("Hash size must be greater than or equal to 2")
     image = cv2.resize(image, (hash_size, hash_size + 1), interpolation = cv2.INTER_AREA)
     diff = image[:, 1:] > image[:, :-1]
-    print('hash: {}'.format(binary_array_to_hex(diff)))
+    logging.debug('hash: {}'.format(binary_array_to_hex(diff)))
     return numpy.packbits(diff.flatten())
 
 def similarity(hash1, hash2, hash_size):
