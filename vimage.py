@@ -38,11 +38,12 @@ def write_frame(data, frame, f_hash, f_dir, f_name, similarity=0.0):
         logging.error(e)
         return 0
 
-def save_frame(data, name, frame, ndd_threshold=0, ndd_hash_size=8):
+def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
     f_dir = data.get('dir', data['path'] + '_vimage')
     if not os.path.exists(f_dir):
         os.makedirs(f_dir)
         data['dir'] = f_dir
+
     if ndd_threshold > 0:
         f_hash = ndd.dhash(frame, hash_size=ndd_hash_size)
         last = data.get('last')
