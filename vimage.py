@@ -55,7 +55,3 @@ def save_frame(data, name, frame, ndd_threshold=0, ndd_hash_size=8):
         return 0
     else:
         return write_frame(data, frame, None, f_dir, name)
-        #file_name = os.path.join(f_dir, name)
-        #logging.info('Writing: {}'.format(file_name))
-        #cv2.imwrite(file_name, frame)
-        #return 1
