@@ -38,7 +38,7 @@ def write_frame(data, frame, f_hash, f_dir, f_name, similarity=0.0):
         logging.error(e)
         return 0
 
-def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
+def save_frame(data, name, frame, ndd_threshold=0, ndd_hash_size=8):
     f_dir = data.get('dir', data['path'] + '_vimage')
     if not os.path.exists(f_dir):
         os.makedirs(f_dir)
@@ -51,14 +51,11 @@ def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
             if similarity < ndd_threshold:
                 return write_frame(data, frame, f_hash, f_dir, name, similarity)
         else:
-            #data['last'] = f_hash
-            #file_name = os.path.join(f_dir, name)
-            #logging.info('Writing: {} - {}'.format(file_name, 1.0))
-            #cv2.imwrite(file_name, frame)
             return write_frame(data, frame, f_hash, f_dir, name)
         return 0
     else:
-        file_name = os.path.join(f_dir, name)
-        logging.info('Writing: {}'.format(file_name))
-        cv2.imwrite(file_name, frame)
-        return 1
+        return write_frame(data, frame, None, f_dir, name)
+        #file_name = os.path.join(f_dir, name)
+        #logging.info('Writing: {}'.format(file_name))
+        #cv2.imwrite(file_name, frame)
+        #return 1
