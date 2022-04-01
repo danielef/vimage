@@ -50,11 +50,6 @@ def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
             similarity = ndd.similarity(last, f_hash, ndd_hash_size)
             if similarity < ndd_threshold:
                 return write_frame(data, frame, f_hash, f_dir, name, similarity)
-                #data['last'] = f_hash
-                #file_name = os.path.join(f_dir, name)
-                #logging.info('Writing: {} - {}'.format(file_name, similarity))
-                #cv2.imwrite(file_name, frame)
-                # return 1
         else:
             #data['last'] = f_hash
             #file_name = os.path.join(f_dir, name)
