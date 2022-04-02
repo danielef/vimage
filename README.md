@@ -24,3 +24,7 @@ usage: app.py [-h] -v VIDEO [-d DELAY] [-r RESIZE]
 app.py: error: the following arguments are required: -v/--video
 ```
 
+## TODO
+- Add params
+  - LSH hashsize
+  - LSH similarity threshold
