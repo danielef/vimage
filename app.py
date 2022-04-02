@@ -36,12 +36,12 @@ if __name__ == '__main__':
     load_log()
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--video', required=True, help='Video File')
-    parser.add_argument('-d', '--delay', required=False, type=float, default=1.0, help='Delay seconds between each capture')
+    parser.add_argument('-d', '--delay', required=False, type=float, default=15.0, help='Delay seconds between each capture')
     parser.add_argument('-r', '--resize', required=False, type=resizeCheck, help='WIDTHxHEIGHT pixels to resize capture')
 
     args = parser.parse_args()
     logging.info('params: {}'.format(args.__dict__))
 
     data = vimage.retrieve_media_data(args.video)
-    logging.debug('{}'.format(vimage.retrieve_captures(data)))
+    logging.debug('{}'.format(vimage.retrieve_captures(data, delta_skip=args.delay)))
     
