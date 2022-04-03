@@ -9,7 +9,7 @@ def retrieve_media_data(path):
     length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     return {'capture': cap, 'fps': fps, 'length': length, 'path': path}
 
-def retrieve_captures(data, delta_skip=15):
+def retrieve_captures(data, delta_skip=15, resize=(270,480)):
     is_success, frame = data['capture'].read()
     f_readed = 0
     f_saved  = 0
@@ -19,7 +19,7 @@ def retrieve_captures(data, delta_skip=15):
         f_readed += 1
         if f_readed % f_skip == 0:
             # print('Saving frame {}'.format(f_readed))
-            f_saved += save_frame(data, '{}.jpg'.format(f_readed), frame)
+            f_saved += save_frame(data, '{}.jpg'.format(f_readed), frame, resize)
         is_success, frame = data['capture'].read()
 
     data['saved'] = f_saved
@@ -27,18 +27,19 @@ def retrieve_captures(data, delta_skip=15):
 
     return data
 
-def write_frame(data, frame, f_hash, f_dir, f_name, similarity=0.0):
+def write_frame(data, frame, resize, f_hash, f_dir, f_name, similarity=0.0):
     try:
         data['last'] = f_hash
         file_name = os.path.join(f_dir, f_name)
         logging.info('Writing: {} - {}'.format(file_name, similarity))
+        frame = frame if resize is None else cv2.resize(frame, resize, interpolation = cv2.INTER_AREA)
         cv2.imwrite(file_name, frame)
         return 1
     except Exception as e:
         logging.error(e)
         return 0
 
-def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
+def save_frame(data, name, frame, resize, ndd_threshold=0.5, ndd_hash_size=8):
     f_dir = data.get('dir', data['path'] + '_vimage')
     if not os.path.exists(f_dir):
         os.makedirs(f_dir)
@@ -50,9 +51,9 @@ def save_frame(data, name, frame, ndd_threshold=0.5, ndd_hash_size=8):
         if last is not None:
             similarity = ndd.similarity(last, f_hash, ndd_hash_size)
             if similarity < ndd_threshold:
-                return write_frame(data, frame, f_hash, f_dir, name, similarity)
+                return write_frame(data, frame, resize, f_hash, f_dir, name, similarity)
         else:
-            return write_frame(data, frame, f_hash, f_dir, name)
+            return write_frame(data, frame, resize, f_hash, f_dir, name)
         return 0
     else:
-        return write_frame(data, frame, None, f_dir, name)
+        return write_frame(data, frame, resize, None, f_dir, name)
