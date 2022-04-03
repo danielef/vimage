@@ -3,6 +3,7 @@ import colorlog
 import logging
 import logging.config
 import os
+import re
 import vimage
 
 def load_log(config='.'):
@@ -43,5 +44,5 @@ if __name__ == '__main__':
     logging.info('params: {}'.format(args.__dict__))
 
     data = vimage.retrieve_media_data(args.video)
-    logging.debug('{}'.format(vimage.retrieve_captures(data, delta_skip=args.delay)))
-    
+    logging.debug('{}'.format(vimage.retrieve_captures(data, delta_skip=args.delay, resize=args.resize)))
+
