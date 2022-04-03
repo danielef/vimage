@@ -23,6 +23,9 @@ def dhash(image, hash_size=8):
     return numpy.packbits(diff.flatten())
 
 def similarity(hash1, hash2, hash_size):
+    """
+    Computes similarity between two given hashes.
+    """
     hd = sum(numpy.bitwise_xor(numpy.unpackbits(hash1), 
                                numpy.unpackbits(hash2)))
     similarity = (hash_size**2 - hd) / hash_size**2
