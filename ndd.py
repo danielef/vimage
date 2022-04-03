@@ -11,10 +11,14 @@ def binary_array_to_hex(arr):
     return '{:0>{width}x}'.format(int(bit_string, 2), width=width)
 
 def dhash(image, hash_size=8):
+    """
+    Performs Difference Hash computation.
+    see: http://www.hackerfactor.com/blog/index.php?/archives/529-Kind-of-Like-That.html
+    """
     if hash_size < 2:
         raise ValueError("Hash size must be greater than or equal to 2")
     image = cv2.resize(image, (hash_size, hash_size + 1), interpolation = cv2.INTER_AREA)
-    diff = image[:, 1:] > image[:, :-1]
+    diff = image[:, 1:] > image[:, :-1] # differences horizontally
     logging.debug('hash: {}'.format(binary_array_to_hex(diff)))
     return numpy.packbits(diff.flatten())
 
