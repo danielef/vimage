@@ -33,27 +33,31 @@ def write_frame(data, frame, resize, f_hash, f_dir, f_name, similarity=0.0):
         file_name = os.path.join(f_dir, f_name)
         logging.info('Writing: {} - {}'.format(file_name, similarity))
         frame = frame if resize is None else cv2.resize(frame, resize, interpolation = cv2.INTER_AREA)
-        cv2.imwrite(file_name, frame)
+        status = cv2.imwrite(file_name, frame)
         return 1
     except Exception as e:
         logging.error(e)
         return 0
 
 def save_frame(data, name, frame, resize, ndd_threshold=0.5, ndd_hash_size=8):
-    f_dir = data.get('dir', data['path'] + '_vimage')
-    if not os.path.exists(f_dir):
-        os.makedirs(f_dir)
-        data['dir'] = f_dir
+    try:
+        f_dir = data.get('dir', data['path'] + '_vimage')
+        if not os.path.exists(f_dir):
+            os.makedirs(f_dir)
+            data['dir'] = f_dir
 
-    if ndd_threshold > 0:
-        f_hash = ndd.dhash(frame, hash_size=ndd_hash_size)
-        last = data.get('last')
-        if last is not None:
-            similarity = ndd.similarity(last, f_hash, ndd_hash_size)
-            if similarity < ndd_threshold:
-                return write_frame(data, frame, resize, f_hash, f_dir, name, similarity)
+        if ndd_threshold > 0:
+            f_hash = ndd.dhash(frame, hash_size=ndd_hash_size)
+            last = data.get('last')
+            if last is not None:
+                similarity = ndd.similarity(last, f_hash, ndd_hash_size)
+                if similarity < ndd_threshold:
+                    return write_frame(data, frame, resize, f_hash, f_dir, name, similarity)
+            else:
+                return write_frame(data, frame, resize, f_hash, f_dir, name)
+            return 0
         else:
-            return write_frame(data, frame, resize, f_hash, f_dir, name)
+            return write_frame(data, frame, resize, None, f_dir, name)
+    except Exception as e:
+        logging.error(e)
         return 0
-    else:
-        return write_frame(data, frame, resize, None, f_dir, name)
