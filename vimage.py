@@ -7,6 +7,8 @@ def retrieve_media_data(path):
     cap = cv2.VideoCapture(path)
     fps = float(cap.get(cv2.CAP_PROP_FPS))
     length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    if length < 0:
+        logging.warn("Video length: {} frames!".format(length))
     return {'capture': cap, 'fps': fps, 'length': length, 'path': path}
 
 def retrieve_captures(data, delta_skip=15, resize=(270,480)):
