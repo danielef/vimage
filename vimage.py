@@ -14,7 +14,7 @@ def retrieve_captures(data, delta_skip=15, resize=(270,480)):
     f_readed = 0
     f_saved  = 0
     f_skip   = int(delta_skip * data['fps']) + 1
-    print('f_skip: {}'.format(f_skip))
+    logging.debug('f_skip: {}'.format(f_skip))
     while is_success:
         f_readed += 1
         if f_readed % f_skip == 0:
