@@ -56,3 +56,5 @@ f_skip: 91
 - Add params
   - LSH hashsize
   - LSH similarity threshold
+- Packaging
+  - Add pyproject.toml instead setup.py
