@@ -1,0 +1,12 @@
+[build-system]
+requires = [
+         "setuptools",
+         "setuptools_scm",
+         "colorlog==6.6.0",
+         "numpy==1.19.2",   
+         "opencv-python>=4.4.0.40"
+         ]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "vimage/version.py"
