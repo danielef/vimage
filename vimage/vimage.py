@@ -11,7 +11,7 @@ def retrieve_media_data(path):
         logging.warn("Video length: {} frames!".format(length))
     return {'capture': cap, 'fps': fps, 'length': length, 'path': path}
 
-def retrieve_captures(data, delta_skip=15, resize=(270,480)):
+def retrieve_captures(data, delta_skip=15, resize=(270,480), ndd_threshold=0.5, ndd_hash_size=8):
     is_success, frame = data['capture'].read()
     f_readed = 0
     f_saved  = 0
@@ -21,7 +21,11 @@ def retrieve_captures(data, delta_skip=15, resize=(270,480)):
         f_readed += 1
         if f_readed % f_skip == 0:
             # print('Saving frame {}'.format(f_readed))
-            f_saved += save_frame(data, '{}.jpg'.format(f_readed), frame, resize)
+            f_saved += save_frame(data,
+                                  '{}.jpg'.format(f_readed),
+                                  frame, resize,
+                                  ndd_threshold=ndd_threshold,
+                                  ndd_hash_size=ndd_hash_size)
         is_success, frame = data['capture'].read()
 
     data['saved'] = f_saved
