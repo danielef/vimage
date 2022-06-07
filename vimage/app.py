@@ -33,7 +33,7 @@ def resizeCheck(widthxheight):
     except Exception:
         raise argparse.ArgumentTypeError("{} is an invalid resize value".format(widthxheight))
 
-if __name__ == '__main__':
+def main():
     load_log()
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--video', required=True, help='Video File')
@@ -50,3 +50,5 @@ if __name__ == '__main__':
                                                        resize=args.resize,
                                                        ndd_hash_size=args.lsh_hashsize)))
 
+if __name__ == '__main__':
+    main()
