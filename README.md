@@ -22,12 +22,12 @@ pip install .
 ```
 
 ## Running
-By default prints a short usage:
+By default the command `vimage` prints a short usage:
 ```
 vimage
 Loading logging configuration from: log.conf
-usage: app.py [-h] -v VIDEO [-d DELAY] [-r RESIZE]
-app.py: error: the following arguments are required: -v/--video
+usage: vimage [-h] -v VIDEO [-d DELAY] [-r RESIZE] [-H LSH_HASHSIZE]
+vimage: error: the following arguments are required: -v/--video
 ```
 
 Real example:
