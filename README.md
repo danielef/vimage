@@ -8,11 +8,17 @@ git clone https://github.com/danielef/vimage.git
 ```
 
 ## Setup
+
+For development, create a virtual environment as follows:
 ```
 cd vimage
 virtualenv -p python3.7 env
 source env/bin/activate
-pip install -r requirements.txt
+```
+
+Then, install using PIP:
+```
+pip install .
 ```
 
 ## Running
@@ -55,5 +61,3 @@ f_skip: 91
 ## TODO
 - Add params
   - LSH similarity threshold
-- Packaging
-  - Add pyproject.toml instead setup.py
