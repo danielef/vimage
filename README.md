@@ -7,7 +7,6 @@ git clone https://github.com/danielef/vimage.git
 ```
 
 ## Setup
-
 For development, create a virtual environment as follows:
 ```
 cd vimage
