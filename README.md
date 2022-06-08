@@ -24,7 +24,7 @@ pip install .
 ## Running
 By default prints a short usage:
 ```
-python app.py
+vimage
 Loading logging configuration from: log.conf
 usage: app.py [-h] -v VIDEO [-d DELAY] [-r RESIZE]
 app.py: error: the following arguments are required: -v/--video
@@ -32,7 +32,7 @@ app.py: error: the following arguments are required: -v/--video
 
 Real example:
 ```
-python app.py --video=../../../Downloads/20220328_BX2_30AN5D_3.mp4
+vimage --video=../../../Downloads/20220328_BX2_30AN5D_3.mp4
 Loading logging configuration from: log.conf
 2022-04-02 01:53:18,759 INFO     62471 root params: {'video': '../../../Downloads/20220328_BX2_30AN5D_3.mp4', 'delay': 15.0, 'resize': None}
 f_skip: 91
@@ -56,7 +56,6 @@ f_skip: 91
 2022-04-02 01:53:27,645 DEBUG    62471 root {'capture': <VideoCapture 0x7feb704516b0>, 'fps': 6.0, 'length': 1094, 'path': '../../../Downloads/20220328_BX2_30AN5D_3.mp4', 'last': array([ 32,   3, 191, 192, 124,  30,   1, 225, 240,  15,  15, 128,  56,
        124,   1, 211, 176,  63, 156,   1, 248, 225, 143, 192], dtype=uint8), 'saved': 5, 'readed': 1094}
 ```
-
 
 ## TODO
 - Add params
