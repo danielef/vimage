@@ -2,7 +2,6 @@
 Extracts relevant scenes from a video using Locality Sensitive Hashing (LSH)
 
 ## Download
-
 ```
 git clone https://github.com/danielef/vimage.git
 ```
