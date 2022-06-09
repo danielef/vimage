@@ -4,7 +4,7 @@ import logging
 import logging.config
 import os
 import re
-import vimage
+import vimage.video
 
 def load_log(config='.'):
     config_dir = os.path.dirname(config)
@@ -44,8 +44,8 @@ def main():
     args = parser.parse_args()
     logging.info('params: {}'.format(args.__dict__))
 
-    data = vimage.retrieve_media_data(args.video)
-    logging.debug('{}'.format(vimage.retrieve_captures(data,
+    data = vimage.video.retrieve_media_data(args.video)
+    logging.debug('{}'.format(vimage.video.retrieve_captures(data,
                                                        delta_skip=args.delay,
                                                        resize=args.resize,
                                                        ndd_hash_size=args.lsh_hashsize)))
