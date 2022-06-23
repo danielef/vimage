@@ -2,31 +2,35 @@
 Extracts relevant scenes from a video using Locality Sensitive Hashing (LSH)
 
 ## Download
-
 ```
 git clone https://github.com/danielef/vimage.git
 ```
 
 ## Setup
+For development, create a virtual environment as follows:
 ```
 cd vimage
 virtualenv -p python3.7 env
 source env/bin/activate
-pip install -r requirements.txt
+```
+
+Then, install using PIP:
+```
+pip install .
 ```
 
 ## Running
-By default prints a short usage:
+By default the command `vimage` prints a short usage:
 ```
-python app.py
+vimage
 Loading logging configuration from: log.conf
-usage: app.py [-h] -v VIDEO [-d DELAY] [-r RESIZE]
-app.py: error: the following arguments are required: -v/--video
+usage: vimage [-h] -v VIDEO [-d DELAY] [-r RESIZE] [-H LSH_HASHSIZE]
+vimage: error: the following arguments are required: -v/--video
 ```
 
 Real example:
 ```
-python app.py --video=../../../Downloads/20220328_BX2_30AN5D_3.mp4
+vimage --video=../../../Downloads/20220328_BX2_30AN5D_3.mp4
 Loading logging configuration from: log.conf
 2022-04-02 01:53:18,759 INFO     62471 root params: {'video': '../../../Downloads/20220328_BX2_30AN5D_3.mp4', 'delay': 15.0, 'resize': None}
 f_skip: 91
@@ -51,9 +55,6 @@ f_skip: 91
        124,   1, 211, 176,  63, 156,   1, 248, 225, 143, 192], dtype=uint8), 'saved': 5, 'readed': 1094}
 ```
 
-
 ## TODO
 - Add params
   - LSH similarity threshold
-- Packaging
-  - Add pyproject.toml instead setup.py
