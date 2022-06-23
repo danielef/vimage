@@ -1,7 +1,7 @@
 import cv2
 import logging
 import os
-import ndd
+import vimage.ndd
 
 def retrieve_media_data(path):
     cap = cv2.VideoCapture(path)
@@ -55,10 +55,10 @@ def save_frame(data, name, frame, resize, ndd_threshold=0.5, ndd_hash_size=8):
             data['dir'] = f_dir
 
         if ndd_threshold > 0:
-            f_hash = ndd.dhash(frame, hash_size=ndd_hash_size)
+            f_hash = vimage.ndd.dhash(frame, hash_size=ndd_hash_size)
             last = data.get('last')
             if last is not None:
-                similarity = ndd.similarity(last, f_hash, ndd_hash_size)
+                similarity = vimage.ndd.similarity(last, f_hash, ndd_hash_size)
                 if similarity < ndd_threshold:
                     return write_frame(data, frame, resize, f_hash, f_dir, name, similarity)
             else:
