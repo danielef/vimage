@@ -11,8 +11,8 @@ def load_log():
     log_config = {
         'version': 1,
         'root': { 'handlers': ['console'], 'level': 'DEBUG' },
-	'handlers': {'console': {'class': 'StreamHandler', 'formatter': 'color'}},
-	'formatters': {'color': {'class': 'colorlog.ColoredFormatter', 'format': '%(asctime)s %(log_color)s%(levelname)-8s%(reset)s %(process)s %(name)s %(message)s'}}
+	'handlers': {'console': {'class': 'logging.StreamHandler', 'formatter': 'color'}},
+	'formatters': {'color': {'()': 'colorlog.ColoredFormatter', 'format': '%(asctime)s %(log_color)s%(levelname)-8s%(reset)s %(process)s %(name)s %(message)s'}}
     }
    
     logging.config.dictConfig(log_config)
