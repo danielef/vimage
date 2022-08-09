@@ -3,28 +3,28 @@ import colorlog
 import logging
 import logging.config
 import os
+import sys
 import re
 import vimage.video
 
-def load_log(config='.'):
-    config_dir = os.path.dirname(config)
-    file_log = os.path.join(config_dir, 'log.conf')
-    print("Loading logging configuration from: {}".format(file_log))
-    if os.path.isfile(file_log):
-        logging.config.fileConfig(file_log)
-        try:
-            import colorlog
-            if isinstance(logging.getLogger().handlers[0].formatter, colorlog.ColoredFormatter):
-                logging.getLogger().handlers[0].formatter.log_colors = {'DEBUG': 'cyan', 
-                                                                        'INFO': 'green', 
-                                                                        'WARNING': 'yellow', 
-                                                                        'ERROR': 'red', 
-                                                                        'CRITICAL': 'purple'}
-        except:
-            pass
-    else:
-        logging.error('Log config file: \'{}\' does not exists'.format(file_log))
-        exit(2)
+def load_log():
+    log_config = {
+        'version': 1,
+        'root': { 'handlers': ['console'], 'level': 'DEBUG' },
+	'handlers': {'console': {'class': 'logging.StreamHandler', 'formatter': 'color'}},
+	'formatters': {'color': {'()': 'colorlog.ColoredFormatter', 'format': '%(asctime)s %(log_color)s%(levelname)-8s%(reset)s %(process)s %(name)s %(message)s'}}
+    }
+   
+    logging.config.dictConfig(log_config)
+    try:
+        if isinstance(logging.getLogger().handlers[0].formatter, colorlog.ColoredFormatter):
+            logging.getLogger().handlers[0].formatter.log_colors = {'DEBUG': 'cyan', 
+                                                                    'INFO': 'green', 
+                                                                    'WARNING': 'yellow', 
+                                                                    'ERROR': 'red', 
+                                                                    'CRITICAL': 'purple'}
+    except:
+        pass
 
 def resizeCheck(widthxheight):
     try:
