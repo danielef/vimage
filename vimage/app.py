@@ -23,10 +23,10 @@ def load_log():
                                                                     'WARNING': 'yellow', 
                                                                     'ERROR': 'red', 
                                                                     'CRITICAL': 'purple'}
-    except:
+    except Exception:
         pass
 
-def resizeCheck(widthxheight):
+def resize_check(widthxheight):
     try:
         width, height = re.split('[xX]', widthxheight)
         return (int(width), int(height))
@@ -38,7 +38,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--video', required=True, help='Video File')
     parser.add_argument('-d', '--delay', required=False, type=float, default=15.0, help='Delay seconds between each capture')
-    parser.add_argument('-r', '--resize', required=False, type=resizeCheck, help='WIDTHxHEIGHT pixels to resize capture')
+    parser.add_argument('-r', '--resize', required=False, type=resize_check, help='WIDTHxHEIGHT pixels to resize capture')
     parser.add_argument('-H', '--lsh_hashsize', required=False, type=int, default=8, help='LSH hashsize')
 
     args = parser.parse_args()

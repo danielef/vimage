@@ -3,6 +3,9 @@ import logging
 import os
 import vimage.ndd
 
+class VideoError(Exception):
+    pass
+
 def retrieve_media_data(path):
     cap = cv2.VideoCapture(path)
     fps = float(cap.get(cv2.CAP_PROP_FPS))
@@ -41,7 +44,7 @@ def write_frame(data, frame, resize, f_hash, f_dir, f_name, similarity=0.0):
         frame = frame if resize is None else cv2.resize(frame, resize, interpolation = cv2.INTER_AREA)
         status = cv2.imwrite(file_name, frame)
         if not status:
-            raise Exception('Unable to write: {}'.format(file_name))
+            raise VideoError('Unable to write: {}'.format(file_name))
         return 1
     except Exception as e:
         logging.error(e)
